@@ -33,7 +33,7 @@ class LighthouseService(object):
         """
         try:
 
-            cmd = f"{self._lighthouse_path} --quiet --no-update-notifier --no-enable-error-reporting --output=json --chrome-flags='--headless' {url} --only-audits='network-requests' --plugins=lighthouse-plugin-greenhouse"
+            cmd = f"{self._lighthouse_path} --quiet --no-update-notifier --no-enable-error-reporting --output=json --chrome-flags='--no-sandbox --enable-logging --headless' {url} --only-audits='network-requests' --plugins=lighthouse-plugin-greenhouse"
 
             process = subprocess.Popen(
                 cmd,
@@ -71,7 +71,6 @@ class LighthouseService(object):
             "other",
         ]
         output = json.loads(output)
-        print(output)
         items = output["audits"]["network-requests"]["details"]["items"]
         metrics = {}
         metrics["transfer_size_bytes"] = {}
@@ -80,6 +79,9 @@ class LighthouseService(object):
 
         metrics["resources_size_bytes"] = {}
         metrics["resources_size_bytes"]["total"] = 0
+
+        metrics["green"] = bool(output['lhr']['categories']['lighthouse-plugin-greenhouse']['score'])
+        print(metrics["green"])
 
         for mime in mime_types:
             metrics["transfer_size_bytes"][f"{mime}"] = 0
