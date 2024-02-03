@@ -52,16 +52,13 @@ Using the tool
   
 ```py
 from carbon.calculator import CarbonCalculator
-from carbon.services import LighthouseService, GreenWebService
+from carbon.services import LighthouseService
 
 # If lighthouse tool is installed globally the following row can be omitted
 lighthouse = LighthouseService(lighthouse = PATH_OF_LIGHTHOUSE_TOOL)
 
-# It loads the Green Web Dataset DB (must be a SQL3Lite file)
-greenweb = GreenWebService(greenweb = PATH_URL_OF_GREEN_DB)
-
 # It calculates CO2 emissions
-carbon = CarbonCalculator(lighthouse=lighthouse, greenweb=greenweb)
+carbon = CarbonCalculator(lighthouse=lighthouse)
 carbon.footprint("https://www.unime.it")
 
 print(carbon.co2_grams)

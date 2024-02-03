@@ -1,6 +1,6 @@
 import argparse
 from carbon.calculator import CarbonCalculator
-from carbon.services import LighthouseService, GreenWebService
+from carbon.services import LighthouseService
 
 
 def main():

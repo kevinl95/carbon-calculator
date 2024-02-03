@@ -1,6 +1,6 @@
 from configparser import ConfigParser
 import os
-from .services import LighthouseService, GreenWebService
+from .services import LighthouseService
 from .statistics import PageStatistics, StatisticsBuilder
 from .exceptions import CarbonCalculatorException
 import validators
@@ -12,9 +12,9 @@ class CarbonCalculator(object):
     """Carbon Calculator - The main module:"""
 
     def __init__(
-        self, greenweb: GreenWebService, lighthouse: LighthouseService
+        self, lighthouse: LighthouseService
     ) -> None:
-        self._builder = StatisticsBuilder(greenweb, lighthouse)
+        self._builder = StatisticsBuilder(lighthouse)
         self._statistics = None
 
     def footprint(self, url: str) -> dict:

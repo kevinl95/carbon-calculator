@@ -1,5 +1,5 @@
 import json
-from .services import LighthouseService, GreenWebService
+from .services import LighthouseService
 from .exceptions import CarbonCalculatorException
 from datetime import date, datetime, timezone
 
@@ -133,7 +133,7 @@ class PageStatistics(object):
 
 class StatisticsBuilder(object):
     def __init__(
-        self, greenweb: GreenWebService, lighthouse: LighthouseService
+        self, lighthouse: LighthouseService
     ) -> None:
         self._greenweb = greenweb
         self._lighthouse = lighthouse
