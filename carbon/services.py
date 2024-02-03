@@ -31,16 +31,6 @@ class LighthouseService(object):
         url : str
             The Website to analyze
         """
-        cmd = f"{self._lighthouse_path} --quiet --no-update-notifier --no-enable-error-reporting --output=json --chrome-flags='--no-sandbox --headless' {url} --plugins=lighthouse-plugin-greenhouse --output-path=/usr/src/app/results.json"
-
-        process = subprocess.Popen(
-            cmd,
-            shell=True,
-            universal_newlines=True,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-        )
-        (output, error) = process.communicate()
         self._build_metrics()
         try:
             if not error:
@@ -53,12 +43,6 @@ class LighthouseService(object):
         except CarbonCalculatorException as e:
             raise Exception(e)
 
-        finally:
-            process.stdout.close()
-            process.stderr.close()
-            process.terminate()
-            process.kill()
-
     def _build_metrics(self):
         mime_types = [
             "html",
@@ -70,7 +54,7 @@ class LighthouseService(object):
             "video",
             "other",
         ]
-        f = open('/usr/src/app/results.json')
+        f = open('results.json')
         output = json.load(f)
         f.close()
         print(output['lhr']['categories']['lighthouse-plugin-greenhouse'])
