@@ -20,12 +20,10 @@ class CarbonCalculator(object):
     def footprint(self, url: str) -> dict:
         if not validators.url(url):
             raise CarbonCalculatorException("The URL is not valid")
-
-        self._statistics = None
-        self._statistics = self._builder.build(url)
-        self._co2 = self._statistics
         try:
-            pass
+            self._statistics = None
+            self._statistics = self._builder.build(url)
+            self._co2 = self._statistics
         except Exception as e:
             raise CarbonCalculatorException(e)
 
