@@ -60,7 +60,7 @@ class LighthouseService(object):
         metrics["resources_size_bytes"] = {}
         metrics["resources_size_bytes"]["total"] = 0
 
-        metrics["green"] = bool(output['greenhouse-id']['score'])
+        metrics["green"] = bool(output['categories']['lighthouse-plugin-greenhouse']['score'])
 
         for mime in mime_types:
             metrics["transfer_size_bytes"][f"{mime}"] = 0
