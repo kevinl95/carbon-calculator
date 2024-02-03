@@ -59,7 +59,7 @@ class LighthouseService(object):
             process.terminate()
             process.kill()
 
-    def _build_metrics(self, output):
+    def _build_metrics(self):
         mime_types = [
             "html",
             "css",
