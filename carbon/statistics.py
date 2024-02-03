@@ -139,12 +139,13 @@ class StatisticsBuilder(object):
 
     def build(self, url: str) -> PageStatistics:
         statistics = None
-        try:
-            self._lighthouse.analyze(url)
-            resources = self._lighthouse.resources
-            statistics = PageStatistics(url, resources)
+        self._lighthouse.analyze(url)
+        resources = self._lighthouse.resources
+        statistics = PageStatistics(url, resources)
 
-            return statistics
+        return statistics
+        try:
+            pass
 
         except Exception as e:
             raise CarbonCalculatorException(e)
