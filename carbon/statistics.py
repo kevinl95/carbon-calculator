@@ -135,16 +135,14 @@ class StatisticsBuilder(object):
     def __init__(
         self, lighthouse: LighthouseService
     ) -> None:
-        self._greenweb = greenweb
         self._lighthouse = lighthouse
 
     def build(self, url: str) -> PageStatistics:
         statistics = None
         try:
-            green = self._greenweb.check(url)
             self._lighthouse.analyze(url)
             resources = self._lighthouse.resources
-            statistics = PageStatistics(url, resources, green)
+            statistics = PageStatistics(url, resources)
 
             return statistics
 
