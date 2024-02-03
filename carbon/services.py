@@ -31,7 +31,7 @@ class LighthouseService(object):
         url : str
             The Website to analyze
         """
-        cmd = f"{self._lighthouse_path} --quiet --no-update-notifier --no-enable-error-reporting --output=json --chrome-flags='--no-sandbox --enable-logging --headless' {url} --only-audits='network-requests' --plugins=lighthouse-plugin-greenhouse"
+        cmd = f"{self._lighthouse_path} --no-update-notifier --no-enable-error-reporting --output=json --chrome-flags='--no-sandbox --enable-logging --headless' {url} --plugins=lighthouse-plugin-greenhouse"
 
         process = subprocess.Popen(
             cmd,
