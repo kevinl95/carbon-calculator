@@ -92,14 +92,9 @@ class CarbonCalculator(object):
                 config["LIGHTHOUSE"]["LIGHTHOUSE_PATH"],
             )
 
-        greenweb_filename = os.path.join(
-            os.path.dirname(__file__), "../../", config["GREENWEB"]["GREENWEB_PATH"]
-        )
-
         lighthouse = LighthouseService(lighthouse_filename)
-        greenweb = GreenWebService(greenweb_filename)
 
-        return cls(lighthouse=lighthouse, greenweb=greenweb)
+        return cls(lighthouse=lighthouse)
 
 
 def json_serial(obj):

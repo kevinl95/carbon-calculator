@@ -10,13 +10,6 @@ def main():
     )
 
     parser.add_argument(
-        "-db",
-        "--greenweb",
-        type=str,
-        help="(Mandatory) - The path of the Green Web Foundation DB (SQL3Lite DB file)",
-        required=True,
-    )
-    parser.add_argument(
         "-lh",
         "--lighthouse",
         type=str,
@@ -33,10 +26,9 @@ def main():
             if not args.lighthouse
             else LighthouseService(args.lighthouse)
         )
-        greenweb = GreenWebService(args.greenweb)
         website = args.website
 
-        carbon = CarbonCalculator(lighthouse=lighthouse, greenweb=greenweb)
+        carbon = CarbonCalculator(lighthouse=lighthouse)
         carbon.footprint(website)
 
         print(carbon.to_json())

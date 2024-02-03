@@ -33,7 +33,7 @@ class LighthouseService(object):
         """
         try:
 
-            cmd = f"{self._lighthouse_path} --quiet --no-update-notifier --no-enable-error-reporting --output=json --chrome-flags='--headless' {url} --only-audits='network-requests'"
+            cmd = f"{self._lighthouse_path} --quiet --no-update-notifier --no-enable-error-reporting --output=json --chrome-flags='--headless' {url} --only-audits='network-requests' --plugins=lighthouse-plugin-greenhouse"
 
             process = subprocess.Popen(
                 cmd,
@@ -71,6 +71,7 @@ class LighthouseService(object):
             "other",
         ]
         output = json.loads(output)
+        print(output)
         items = output["audits"]["network-requests"]["details"]["items"]
         metrics = {}
         metrics["transfer_size_bytes"] = {}
@@ -126,75 +127,3 @@ class LighthouseService(object):
     def resources(self) -> dict:
         """The collection of the metrics"""
         return self._resources
-
-
-class GreenWebService(object):
-    """The GreenWebService component checks if site is present in the Green Web Dataset
-
-    The dataset can be download here:
-        https://www.thegreenwebfoundation.org/green-web-datasets/
-    """
-
-    def __init__(self, db_file: str) -> None:
-        try:
-            if not self._is_valid_sqlite3_db(db_file):
-                raise CarbonCalculatorException("The sqlite db is not valid or missing")
-
-            _conn = sqlite3.connect(f"file:{db_file}?mode=ro", uri=True)
-            self._cur = _conn.cursor()
-
-        except CarbonCalculatorException as e:
-            raise Exception(e)
-
-        except Exception as e:
-            raise Exception("Problems in GreenWebService")
-
-    def check(self, site) -> bool:
-        """Chek if site is present in the green dataset
-
-        Parameters
-        ----------
-        site : str
-            URL of the website to check
-
-
-        Returns
-        -------
-        bool:
-            True if website is present in the dataset, False otherwise
-
-        """
-
-        site_cleaned = site.replace("http://", "").replace("https://", "")
-        sql = "SELECT EXISTS(SELECT 1 FROM greendomain WHERE url LIKE ?)"
-
-        try:
-            self._cur.execute(sql, (f"%{site_cleaned}%",))
-            result = self._cur.fetchone()[0]
-        except Exception:
-            raise Exception
-        finally:
-            self._cur.close()
-
-        return True if result == 1 else False
-
-    def _is_valid_sqlite3_db(self, filename):
-        """
-        Check if a file is a SQLite3 database.
-        http://stackoverflow.com/questions/12932607/how-to-check-with-python-and-sqlite3-if-one-sqlite-database-file-exists
-        """
-
-        if not isfile(filename):
-            return False
-        if getsize(filename) < 100:  # SQLite database file header is 100 bytes
-            return False
-
-        with open(filename, "rb") as fd:
-            header = fd.read(100)
-
-        isFileSQLite = False
-
-        if header[0:16] == b"SQLite format 3\000":
-            isFileSQLite = True
-
-        return isFileSQLite
