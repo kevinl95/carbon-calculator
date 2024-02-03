@@ -31,15 +31,9 @@ class LighthouseService(object):
         url : str
             The Website to analyze
         """
-        self._build_metrics()
+        
         try:
-            if not error:
-                pass
-            else:
-                raise CarbonCalculatorException(
-                    "Error in Lighthouse tool - the tool must be installed and present in the PATH or the absolute URL must be passed as argument"
-                )
-
+            self._build_metrics()
         except CarbonCalculatorException as e:
             raise Exception(e)
 
@@ -57,7 +51,6 @@ class LighthouseService(object):
         f = open('results.json')
         output = json.load(f)
         f.close()
-        print(output['lhr']['categories']['lighthouse-plugin-greenhouse'])
         items = output["audits"]["network-requests"]["details"]["items"]
         metrics = {}
         metrics["transfer_size_bytes"] = {}
@@ -67,8 +60,7 @@ class LighthouseService(object):
         metrics["resources_size_bytes"] = {}
         metrics["resources_size_bytes"]["total"] = 0
 
-        metrics["green"] = bool(output['lhr']['categories']['lighthouse-plugin-greenhouse']['score'])
-        print(metrics["green"])
+        metrics["green"] = bool(output['greenhouse-id']['score'])
 
         for mime in mime_types:
             metrics["transfer_size_bytes"][f"{mime}"] = 0
