@@ -43,8 +43,9 @@ class LighthouseService(object):
                 stderr=subprocess.PIPE,
             )
             (output, error) = process.communicate()
+            self._build_metrics(output)
             if not error:
-                self._build_metrics(output)
+                pass
             else:
                 raise CarbonCalculatorException(
                     "Error in Lighthouse tool - the tool must be installed and present in the PATH or the absolute URL must be passed as argument"
