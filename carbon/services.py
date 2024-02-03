@@ -31,7 +31,7 @@ class LighthouseService(object):
         url : str
             The Website to analyze
         """
-        cmd = f"{self._lighthouse_path} --quiet --no-update-notifier --no-enable-error-reporting --output=json --chrome-flags='--no-sandbox --headless' {url} --plugins=lighthouse-plugin-greenhouse"
+        cmd = f"{self._lighthouse_path} --quiet --no-update-notifier --no-enable-error-reporting --output=json --chrome-flags='--no-sandbox --headless' {url} --plugins=lighthouse-plugin-greenhouse --output-path=results.json"
 
         process = subprocess.Popen(
             cmd,
@@ -41,8 +41,7 @@ class LighthouseService(object):
             stderr=subprocess.PIPE,
         )
         (output, error) = process.communicate()
-        print(output)
-        self._build_metrics(output)
+        self._build_metrics()
         try:
             if not error:
                 pass
@@ -71,7 +70,9 @@ class LighthouseService(object):
             "video",
             "other",
         ]
-        output = json.loads(output)
+        f  = open('results.json')
+        output = json.load(f)
+        f.close()
         print(output['lhr']['categories']['lighthouse-plugin-greenhouse'])
         items = output["audits"]["network-requests"]["details"]["items"]
         metrics = {}
