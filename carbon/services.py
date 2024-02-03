@@ -71,7 +71,7 @@ class LighthouseService(object):
             "video",
             "other",
         ]
-        f  = open('results.json')
+        f  = open(self._output_path)
         output = json.load(f)
         f.close()
         print(output['lhr']['categories']['lighthouse-plugin-greenhouse'])
