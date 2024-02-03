@@ -31,19 +31,18 @@ class LighthouseService(object):
         url : str
             The Website to analyze
         """
+        cmd = f"{self._lighthouse_path} --quiet --no-update-notifier --no-enable-error-reporting --output=json --chrome-flags='--no-sandbox --enable-logging --headless' {url} --only-audits='network-requests' --plugins=lighthouse-plugin-greenhouse"
+
+        process = subprocess.Popen(
+            cmd,
+            shell=True,
+            universal_newlines=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+        )
+        (output, error) = process.communicate()
+        self._build_metrics(output)
         try:
-
-            cmd = f"{self._lighthouse_path} --quiet --no-update-notifier --no-enable-error-reporting --output=json --chrome-flags='--no-sandbox --enable-logging --headless' {url} --only-audits='network-requests' --plugins=lighthouse-plugin-greenhouse"
-
-            process = subprocess.Popen(
-                cmd,
-                shell=True,
-                universal_newlines=True,
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE,
-            )
-            (output, error) = process.communicate()
-            self._build_metrics(output)
             if not error:
                 pass
             else:
