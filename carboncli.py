@@ -16,13 +16,20 @@ def main():
         help="(Optional) - The path of the Lighthouse tool",
         required=False,
     )
+    parser.add_argument(
+        "-o",
+        "--output",
+        type=str,
+        help="Report output path",
+        required=True,
+    )
     parser.add_argument("website", type=str, help="The URL to analyze")
 
     args = parser.parse_args()
     lighthouse = (
-        LighthouseService()
+        LighthouseService(args.output)
         if not args.lighthouse
-        else LighthouseService(args.lighthouse)
+        else LighthouseService(args.lighthouse, args.output)
     )
     website = args.website
 
