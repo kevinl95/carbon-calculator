@@ -17,7 +17,7 @@ class PageStatistics(object):
     PERCENTAGE_OF_ENERGY_IN_TRANSMISSION_AND_END_USER = 0.8992
     CO2_GRAMS_TO_LITRES = 0.5562
 
-    def __init__(self, url: str, resources: dict, green: bool) -> None:
+    def __init__(self, url: str, resources: dict) -> None:
         self._adjusted_bytes = 0
         self._energy = 0
         self._co2 = 0
@@ -32,6 +32,7 @@ class PageStatistics(object):
         self._url = url
         self._litres = 0
         self._created_at = None
+        self._green = resources['green']
 
         self._calculate_stats()
 
