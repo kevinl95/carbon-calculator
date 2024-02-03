@@ -25,7 +25,6 @@ class PageStatistics(object):
         self._co2_grid_litres = 0
         self._co2_renewable_grams = 0
         self._co2_renewable_litres = 0
-        self._green = green
         self._resources = resources
         self._transfered_bytes = 0
         self._resources_bytes = 0

@@ -21,10 +21,11 @@ class CarbonCalculator(object):
         if not validators.url(url):
             raise CarbonCalculatorException("The URL is not valid")
 
+        self._statistics = None
+        self._statistics = self._builder.build(url)
+        self._co2 = self._statistics
         try:
-            self._statistics = None
-            self._statistics = self._builder.build(url)
-            self._co2 = self._statistics
+            pass
         except Exception as e:
             raise CarbonCalculatorException(e)
 
