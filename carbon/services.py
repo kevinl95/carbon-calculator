@@ -41,6 +41,7 @@ class LighthouseService(object):
             stderr=subprocess.PIPE,
         )
         (output, error) = process.communicate()
+        print(output)
         self._build_metrics(output)
         try:
             if not error:
@@ -71,6 +72,7 @@ class LighthouseService(object):
             "other",
         ]
         output = json.loads(output)
+        print(output['lhr']['categories']['lighthouse-plugin-greenhouse'])
         items = output["audits"]["network-requests"]["details"]["items"]
         metrics = {}
         metrics["transfer_size_bytes"] = {}
