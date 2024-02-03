@@ -14,9 +14,8 @@ class LighthouseService(object):
     https://github.com/GoogleChrome/lighthouse
     """
 
-    def __init__(self, lighthouse_path: str = "", output_path: str = "") -> None:
+    def __init__(self, lighthouse_path: str = "") -> None:
         self._resources = {}
-        self._output_path = output_path
         self._transfered_bytes = 0
         self._resources_bytes = 0
         self._lighthouse_path = (
@@ -32,7 +31,7 @@ class LighthouseService(object):
         url : str
             The Website to analyze
         """
-        cmd = f"{self._lighthouse_path} --quiet --no-update-notifier --no-enable-error-reporting --output=json --chrome-flags='--no-sandbox --headless' {url} --plugins=lighthouse-plugin-greenhouse --output-path={self._output_path}"
+        cmd = f"{self._lighthouse_path} --quiet --no-update-notifier --no-enable-error-reporting --output=json --chrome-flags='--no-sandbox --headless' {url} --plugins=lighthouse-plugin-greenhouse --output-path=/usr/src/app/results.json"
 
         process = subprocess.Popen(
             cmd,
@@ -71,7 +70,7 @@ class LighthouseService(object):
             "video",
             "other",
         ]
-        f  = open(self._output_path)
+        f = open('/usr/src/app/results.json')
         output = json.load(f)
         f.close()
         print(output['lhr']['categories']['lighthouse-plugin-greenhouse'])
