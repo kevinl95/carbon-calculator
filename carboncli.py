@@ -20,17 +20,19 @@ def main():
 
     args = parser.parse_args()
 
+    lighthouse = (
+        LighthouseService()
+        if not args.lighthouse
+        else LighthouseService(args.lighthouse)
+    )
+    website = args.website
+
+    carbon = CarbonCalculator(lighthouse=lighthouse)
+    carbon.footprint(website)
+
+    print(carbon.to_json())
+
     try:
-        lighthouse = (
-            LighthouseService()
-            if not args.lighthouse
-            else LighthouseService(args.lighthouse)
-        )
-        website = args.website
-
-        carbon = CarbonCalculator(lighthouse=lighthouse)
-        carbon.footprint(website)
-
-        print(carbon.to_json())
+        pass
     except Exception as e:
         print(e)

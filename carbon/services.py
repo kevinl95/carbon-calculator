@@ -31,9 +31,9 @@ class LighthouseService(object):
         url : str
             The Website to analyze
         """
-        
+        self._build_metrics()
         try:
-            self._build_metrics()
+            pass
         except CarbonCalculatorException as e:
             raise Exception(e)
 
