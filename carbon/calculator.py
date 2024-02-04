@@ -67,7 +67,7 @@ class CarbonCalculator(object):
     def to_string(self) -> str:
         output = ""
         output += "date " + str(self._statistics.created_at) + "\n"
-        output += "url " self._statistics.url + "\n"
+        output += "url " + self._statistics.url + "\n"
         output += "hosting_green " + str(self._statistics.hosting_green) + "\n"
         output += "co2_grams " + str(self._statistics.co2_grams) + "\n"
         # Estimate the offset
