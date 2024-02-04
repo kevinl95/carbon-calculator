@@ -18,10 +18,10 @@ def main():
     )
 
     parser.add_argument(
-        "-u",
-        "--users",
+        "-r",
+        "--requests",
         type=int,
-        help="(Optional) - Estimated number of users your site experiences",
+        help="(Optional) - Estimated number of requests your site experiences",
         required=False,
     )
     parser.add_argument("website", type=str, help="The URL to analyze")
@@ -36,9 +36,9 @@ def main():
         )
         website = args.website
         if args.users:
-            carbon = CarbonCalculator(lighthouse=lighthouse, users=args.users)
+            carbon = CarbonCalculator(lighthouse=lighthouse, users=args.requests)
         else:
-            carbon = CarbonCalculator(lighthouse=lighthouse, users=1000)
+            carbon = CarbonCalculator(lighthouse=lighthouse, users=10000)
         carbon.footprint(website)
 
         print(carbon.to_json())

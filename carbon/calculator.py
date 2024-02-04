@@ -12,11 +12,11 @@ class CarbonCalculator(object):
     """Carbon Calculator - The main module:"""
 
     def __init__(
-        self, lighthouse: LighthouseService, users: int
+        self, lighthouse: LighthouseService, reqs: int
     ) -> None:
         self._builder = StatisticsBuilder(lighthouse)
         self._statistics = None
-        self._estimated_users = users
+        self._estimated_requests = reqs
 
     def footprint(self, url: str) -> dict:
         if not validators.url(url):
@@ -71,7 +71,7 @@ class CarbonCalculator(object):
         output["hosting_green"] = self._statistics.hosting_green
         output["co2_grams"] = self._statistics.co2_grams
         # Estimate the offset
-        tons = self._statistics.co2_grams * 0.000001 * self._estimated_users
+        tons = self._statistics.co2_grams * 0.000001 * self._estimated_requests
         output["offset_link"] = "https://www.wren.co/offset-anything?amount=" + str(tons) + "&unit=ton"
         output["energy_kWh"] = self._statistics.energy_kWh
         output["water_litres"] = self._statistics.water_litres
