@@ -35,7 +35,7 @@ def main():
             else LighthouseService(args.lighthouse)
         )
         website = args.website
-        if args.users:
+        if args.requests:
             carbon = CarbonCalculator(lighthouse=lighthouse, reqs=args.requests)
         else:
             carbon = CarbonCalculator(lighthouse=lighthouse, reqs=10000)
