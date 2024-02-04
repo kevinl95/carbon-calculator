@@ -64,6 +64,21 @@ class CarbonCalculator(object):
     def resources(self) -> dict:
         return self._statistics.resources
 
+    def to_string(self) -> str:
+        output = ""
+        output += "date " + str(self._statistics.created_at) + "\n"
+        output += "url " self._statistics.url + "\n"
+        output += "hosting_green " + str(self._statistics.hosting_green) + "\n"
+        output += "co2_grams " + str(self._statistics.co2_grams) + "\n"
+        # Estimate the offset
+        tons = self._statistics.co2_grams * 0.000001 * self._estimated_requests
+        output += "offset_link " + "https://www.wren.co/offset-anything?amount=" + str(tons) + "&unit=ton" + "\n"
+        output += "energy_kWh " + str(self._statistics.energy_kWh) + "\n"
+        output += "water_litres " + str(self._statistics.water_litres) + "\n"
+        output += "resources " + str(self._statistics.resources)
+
+        return output
+
     def to_dict(self) -> dict:
         output = {}
         output["date"] = self._statistics.created_at
