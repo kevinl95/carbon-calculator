@@ -16,6 +16,14 @@ def main():
         help="(Optional) - The path of the Lighthouse tool",
         required=False,
     )
+
+    parser.add_argument(
+        "-u",
+        "--users",
+        type=int,
+        help="(Optional) - Estimated number of users your site experiences",
+        required=False,
+    )
     parser.add_argument("website", type=str, help="The URL to analyze")
 
     args = parser.parse_args()
@@ -27,8 +35,10 @@ def main():
             else LighthouseService(args.lighthouse)
         )
         website = args.website
-
-        carbon = CarbonCalculator(lighthouse=lighthouse)
+        if args.users:
+            carbon = CarbonCalculator(lighthouse=lighthouse, users=args.users)
+        else:
+            carbon = CarbonCalculator(lighthouse=lighthouse, users=1000)
         carbon.footprint(website)
 
         print(carbon.to_json())
