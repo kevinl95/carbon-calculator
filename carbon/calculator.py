@@ -72,7 +72,7 @@ class CarbonCalculator(object):
         output["co2_grams"] = self._statistics.co2_grams
         # Estimate the offset
         tons = self._statistics.co2_grams * 0.000001 * self._estimated_users
-        output["offset_link"] = "https://www.wren.co/offset-anything?amount=" + tons + "&unit=ton"
+        output["offset_link"] = "https://www.wren.co/offset-anything?amount=" + str(tons) + "&unit=ton"
         output["energy_kWh"] = self._statistics.energy_kWh
         output["water_litres"] = self._statistics.water_litres
         output["resources"] = self._statistics.resources
