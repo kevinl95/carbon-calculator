@@ -36,9 +36,9 @@ def main():
         )
         website = args.website
         if args.users:
-            carbon = CarbonCalculator(lighthouse=lighthouse, users=args.requests)
+            carbon = CarbonCalculator(lighthouse=lighthouse, reqs=args.requests)
         else:
-            carbon = CarbonCalculator(lighthouse=lighthouse, users=10000)
+            carbon = CarbonCalculator(lighthouse=lighthouse, reqs=10000)
         carbon.footprint(website)
 
         print(carbon.to_json())
